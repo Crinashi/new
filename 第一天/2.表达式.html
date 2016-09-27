@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html ng-app>
+<head lang="en" >
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<input type="text" ng-model="name">
+<input type="text" ng-model="age">
+{{name}}
+{{age}}
+<!--<div ng-bind="name?name:'zfpx'"></div>-->
+
+<!--<div ng-bind-template="{{name}} {{age}}"></div>-->
+
+<script src="node_modules/angular/angular.js"></script>
+<script>
+    //{{if(name)}}表达式中可以使用三元表达式
+    //默认表达式会造成页面的闪烁，因为angular未加载完导致的页面闪烁
+    //通过ng-bind指令可以绑定单一的数据避免闪烁，必须加载标签元素上，而不能绑定多个
+    //ng-bind-template绑定多个属性,也不能嵌套
+    //ng-cloak防止闪烁 g-clock实现原理是先让div隐藏，等angular加载完后会自动把这个属性移除掉
+
+
+    /*[]是属性选择器*/
+
+
+    /*
+    * {{}}会闪烁
+    * ng-bind 只能绑定一个元素，并且不能嵌套
+    * ng-bind-template 绑定多个元素，不能嵌套
+    * ng-cloak刚开始隐蔽，angular加载完后，会将ng-cloak属性移除掉，将渲染好的数据显示在页面上
+    * */
+</script>
+</body>
+</htmlng-app>

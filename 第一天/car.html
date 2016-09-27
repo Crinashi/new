@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html ng-app="appModule">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css"/>
+</head>
+<body>
+<table class="table table-bordered" ng-controller="carCtrl">
+    <tr>
+        <td><input type="checkbox" ng-model="selectAll" ng-click="selectOn()"/>全选</td>
+        <td>商品</td>
+        <td>数量</td>
+        <td>单价</td>
+        <td>小计</td>
+        <td>操作</td>
+    </tr>
+    <tr ng-repeat="value in products track by $index">
+        <td><input type="checkbox" ng-model="value.selected" ng-click="selectOne()"/></td>
+        <td>{{value.name}}</td>
+        <td>
+            <button ng-click="value.count=value.count-1" ng-disabled="value.count<=1">-</button>
+            <input type="text" ng-model="value.count"/>
+            <button ng-click="value.count=value.count+1">+</button>
+        </td>
+        <td>{{value.price}}</td>
+        <td>{{value.count*value.price}}</td>
+        <!--将想要删除的数据传递到方法中-->
+        <td><button class="btn btn-danger" ng-click="del(value)">删除</button></td>
+
+    </tr>
+    <tr>
+        <td colspan="6">总价{{total(value)}}</td>
+    </tr>
+</table>
+<script src="node_modules/angular/angular.js"></script>
+<script>
+    var app=angular.module('appModule',[]);
+    app.controller('carCtrl',function($scope){
+        $scope.selectAll=true;
+        $scope.products=[
+            {name:'阿玛尼小黑管',price:300,count:1,selected:true},
+            {name:'兰蔻眼部基底精华液',price:500,count:1,selected:true},
+            {name:'YDL12号斩男色',price:200,count:1,selected:true},
+            {name:'刘亦菲同款',price:180,count:1,selected:true}
+        ];
+        $scope.del=function(value){
+            $scope.products=$scope.products.filter(function(item){
+                return value!=item;
+            });
+        };
+        $scope.total = function(){
+            var sum=0;
+            $scope.products.forEach(function(value){
+                sum+=value.price*value.count;
+            });
+            return sum;
+        };
+        $scope.selectOn=function(){
+            $scope.products.forEach(function(value){
+                value.selected = $scope.selectAll;
+            })
+        };
+        function s(){
+            var flag=true;
+            $scope.products.forEach(function(value){
+                if(!value.selected) flag=false;
+            });
+            $scope.selectAll = flag;
+        }
+        s();
+        $scope.selectOne=s;
+    });
+    //选中多少个商品，删除选中商品，只算出选中的价格
+</script>
+</body>
+</html>

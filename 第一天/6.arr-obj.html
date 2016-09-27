@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html ng-app="appModule">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<!--要循环谁就要在谁身上写指令-->
+<!--<div ng-controller="myCtrl">
+    <ul>
+        <li ng-repeat="value in arrs track by $index">
+            {{value}}{{$index}}&lt;!&ndash; {{$even}} {{$odd}} {{$first}}{{$last}}&ndash;&gt;
+            &lt;!&ndash;在数组中，遍历是最好增加track by $index 防止循环时无法通过不是唯一值遍历&ndash;&gt;
+        </li>
+    </ul>
+    <ul ng-repeat="value in arrs track by $index">
+        <li>苹果：白色 金色 灰色</li>
+        <li>小米：白色 黑色</li>
+        <li>华为：白色</li>
+    </ul>
+</div>-->
+<div ng-controller="myCtrl">
+    <ul>
+        <!--ng-init就是在当前作用域下声明一个变量（基本不会使用），在控制器声明数据-->
+        <li ng-repeat="phone in phones track by $index" ng-init="parent=$index">
+            {{phone.name}}
+            <ul>
+                <li ng-repeat="t in phone.type track by $index">
+                    {{t}}{{$index}}{{parent}}
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<div ng-controller="myCtrl">
+    <li ng-repeat="(key,o) in obj">
+        {{o}}{{key}}
+    </li>
+</div>
+<script src="node_modules/angular/angular.js"></script>
+<script>
+    var app=angular.module('appModule',[]);
+    app.controller('myCtrl',function($scope){
+        $scope.arrs = ['苹果','三星','小米'];
+        /*for(var key in arrs){
+            console.log(arrs[key]);
+        }*/
+        $scope.phones=[{name:'苹果',type:['白色','金色','灰色']},{name:'小米',type:['白色','黑色']},{name:'华为',type:['白色']}];
+        $scope.obj={
+            name:'zfpx',
+            age:'8',
+            address:'回龙观'
+        };
+        //无论是对象还是数组通过for in取出来的永远是我们value值
+    });
+
+</script>
+</body>
+</html>
